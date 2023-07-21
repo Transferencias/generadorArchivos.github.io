@@ -1,0 +1,3268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagos Masivos BanReservas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tabs {
+          
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            padding: 10px 0;
+           
+            width: 100%;
+            justify-content: space-around;
+            font-weight: bold
+            
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: #ddd;
+        }
+
+        .tab.active {
+            background-color: #ccc;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+
+
+<body>
+    
+
+    <div class="tabs">
+        <div class="tab active" onclick="changeTab(event, 'tab1')">Pago Nominas BanReservas</div>
+        <div class="tab" onclick="changeTab(event, 'tab2')">Transferencias InterBancarias masivas ACH</div>
+        <div class="tab" onclick="changeTab(event, 'tab3')">Transferencias Al Instante BCRD</div>
+    </div>
+
+    <div class="tab-content active" id="tab1">
+      <style>
+        /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #edeef1;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #tipoMCODpn {
+        display: none;
+      }
+      
+      label[for="#tipoMCODpn"]{
+        display: none;
+      }
+      
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .validation-message {
+        color: rgba(255, 0, 0, 0.795);
+        font-size: 12px;
+        margin-top: 5px;
+      }
+      
+      h2 {
+        margin-top: 0;
+        color: #333;
+      }
+      
+      h3 {
+        margin-top: 0;
+        color: #8b8888;
+        font-size: 16px;
+      }
+      
+      .form-container {
+        background-color: #dee0e6;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(85, 89, 95, 0.384);
+        padding: 20px;
+       
+      }
+      
+      
+      .form-container1 {
+      
+        
+        font-family: Arial, sans-serif; /* Estilo de letra */
+        font-size: 12px; /* Tamaño de fuente */
+        background-color: #dee0e6;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(85, 89, 95, 0.384);
+        padding: 20px;
+        
+      }
+      .form-container1 table .delete-button {
+        font-size: 16px; /* Tamaño de fuente más pequeño para el botón "Eliminar" */
+        padding: 4px 6px; /* Ajustar el espaciado interno del botón si es necesario */
+      }
+      
+      
+      /* Estilo para resaltar la fila seleccionada en la tabla */
+      .highlighted-row {
+        background-color: #ebae3e;
+      }
+      
+      
+      
+      
+      
+      /* Resto de estilos */
+      .form-actions {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: 20px;
+      }
+      
+      .form-actions button {
+        margin-right: 10px;
+      }
+      
+      .summary-label {
+        margin-top: 12px;
+        font-weight: bold;
+        
+      }
+      
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 1px;
+        
+      }
+      
+      footer {
+  background-color: #f5f5f5;
+  padding: 10px;
+  text-align: right;
+}
+
+p {
+  font-size: 14px;
+  color: #888;
+}
+
+span {
+  font-weight: bold;
+  color: #333;
+}
+
+      
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: #335b9c;
+      }
+      
+      small {
+        color: #888;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      button:hover {
+        background-color: #357ae8;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      
+      th,
+      td {
+        font-family: sans-serif;
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+      }
+      
+      td:last-child {
+        text-align: center;
+      }
+      
+      button.delete-button {
+        background-color: #e74c3c;
+      }
+      
+      button.delete-button:hover {
+        background-color: #c0392b;
+      }
+      /*
+      input[type="text"],
+      input[type="number"],
+      select,
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        width: 80px; /* Ajusta el ancho según tus necesidades */
+       /* height: 40px; /* Ajusta la altura según tus necesidades */
+      
+      /*}*/
+      
+      /* Opcional: Estilos adicionales para resaltar el campo si es requerido */
+      /*select[name="tipo"]:required,
+      select[name="tipoMCO"]:required {
+        border-color: #ccc;
+      } */
+      
+      /* Nuevos estilos */
+      .form-group {
+        display: flex;
+        
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      
+      input[type="text"],
+      input[type="number"],
+      select,
+      input[type="file"] {
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        padding: 10px;
+      }
+      
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: red;
+      }
+      
+      
+      .form-group label {
+        flex-basis: 150px; /* Ajusta el ancho según tus necesidades */
+      }
+      
+      .form-group .input-container {
+        display: flex;
+        flex-grow: 1;
+        margin-left: 20px; /* Espacio entre los campos */
+      }
+      
+      .form-group select,
+      .form-group input[type="text"] {
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        
+        padding: 7px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+      }
+      
+      /* Estilos del formulario */
+      .form-group:last-child {
+        margin-bottom: 20px;
+      }
+      
+      /* Estilos para dispositivos móviles */
+      @media (max-width: 600px) {
+        .form-container {
+          padding: 10px;
+        }
+      
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+          font-size: 12px;
+        }
+      
+        button {
+          font-size: 12px;
+        }
+      
+        table {
+          font-size: 12px;
+        }
+      }
+      
+      .file-input-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-bottom: 1px; /* Agregar un margen inferior */
+        margin-right: 5px; /* Agregar un margen derecho */
+      }
+      
+      
+      .archivo-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      
+      }
+      
+      .archivo-button {
+        display: none;
+      }
+      
+      
+      
+      /* Resto de estilos */
+      /* Eliminar duplicidad de esta regla */
+      .form-actions {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: 20px;
+      }
+      
+          
+          
+      
+        
+        </style>
+
+
+</head>
+        <h2>Pago de Nomina y Suplidores</h2>
+        
+        <div class="form-container">
+            <h3>Complete los campos requeridos:</h3>
+            <form id="transfer-form" onsubmit="validateFormpn(event)">
+                <div class="form-group">
+                    <label for="tipoMCOpn">Moneda:</label>
+                    <select id="tipoMCOpn" name="tipoMCOpn" required>
+                        <option value="DOP">Pesos</option>
+                        <option value="USD">Dolares</option>
+                        <option value="EUR">Euros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tipopn">Cuenta Origen:</label>
+                    <select id="tipopn" name="tipopn">
+                        <option value="CC">Corriente</option>
+                        <option value="CA">Ahorro</option>
+                    </select>
+                    <input type="text" id="origenpn" name="origenpn" maxlength="10" required oninput="buscarNombre()"/> 
+                    <div class="validation-message" id="origenpn-error"></div> 
+                </div>
+                <div class="form-group">
+                    <label for="tipoCDpn">Cuenta Destino:</label>
+                    <select id="tipoCDpn" name="tipoCDpn">
+                        <option value="CC">Corriente</option>
+                        <option value="CA">Ahorro</option>
+                    </select>
+                    <input type="text" id="destinopn" name="destinopn" maxlength="10" required pattern="[0-9]{10}"/>
+                    <div class="validation-message" id="destinopn-error"></div>
+                </div>
+                <div class="form-group">
+                    <select id="tipoMCODpn" name="tipoMCODpn" required>
+                        <option value="DOP">Pesos</option>
+                        <option value="USD">Dolares</option>
+                        <option value="EUR">Euros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="valorpn">Valor:</label>
+                    <input type="text" id="valorpn" name="valorpn" min="0.01" max="1000000" step="0.01" required pattern="[0-9]{10}"/>
+                </div>
+                <div class="form-group">
+                    <label for="nombrepn">Nombre:</label>
+                    <input type="text" id="nombrepn" name="nombrepn" maxlength="54" required oninput="convertirAMayusculas(this)"/>
+                    <div class="validation-message" id="nombrepn-error"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="addTransferpn()">Agregar</button>
+                    <button type="button" onclick="saveTransferspn()">Guardar</button>
+                    <label for="file-inputpn" class="file-input-button">Cargar Archivo</label>
+                    <input type="file" id="file-inputpn" accept=".txt" onchange="loadTransferspn()" style="display: none;"/>
+                </div>
+            </form>
+        </div>
+        
+        <label id="summary-labelpn" class="summary-label"></label>
+        
+        <div class="form-container1">
+            <table id="transfer-tablepn">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cuenta Origen</th>
+                        <th>Cuenta Destino</th>
+                        <th>Valor</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                        <th>Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody id="transfer-listpn"></tbody>
+            </table>
+        </div>
+
+        <footer>
+          <p>Versión: <span id="version"></span></p>
+        </footer>
+
+        <script>
+
+
+// Obtener el elemento donde se mostrará la versión
+var versionElement = document.getElementById('version');
+
+// Definir la versión actual de tu proyecto
+var version = '1.0.2prueba01';
+
+// Asignar la versión al elemento
+versionElement.textContent = version
+
+
+
+
+
+
+
+          var transferspn = []; // Almacena las transferencias agregadas
+      
+          // Agrega una transferencia a la lista de transferencias
+          function addTransferpn() {
+            var tipopn = document.getElementById('tipopn').value; //Modificado Tipo 
+            var tipoMCOpn = document.getElementById('tipoMCOpn').value; //Modificado Tipo 
+            var origenpn = document.getElementById('origenpn').value;
+            var tipoCDpn = document.getElementById('tipoCDpn').value; //Modificado Tipo
+            var tipoMCODpn = document.getElementById('tipoMCODpn').value; //Modificado Tipo 
+            var destinopn = document.getElementById('destinopn').value;
+            var valorpn = document.getElementById('valorpn').value;
+            var nombrepn = document.getElementById('nombrepn').value;
+            //var tipo = document.getElementById('tipo').value;
+            var tipoMCODpn = tipoMCOpn;
+      
+            if (origenpn.trim() === '' || destinopn.trim() === '' || valorpn.trim() === '' || nombrepn.trim() === '') {
+              alert('Todos los campos son requeridos.');
+              return;
+            }
+      
+            if (origenpn.length !== 10 || destinopn.length !== 10) {
+              alert('La cuenta origen y la cuenta destino deben tener exactamente 10 Numeros.');
+              return;
+            }
+      
+      
+            if (!/^[0-9]{10}$/.test(origenpn)) {
+              alert('La Cuenta Origen debe tener 10 numeros');
+              return;
+            }
+            if (!/^[0-9]{10}$/.test(destinopn)) {
+              alert('La Cuenta Destino debe tener 10 numeros');
+              return;
+            }
+      
+            if (!/^\d+\.\d{2}$/.test(valorpn)) {
+              alert('El valor debe tener dos decimales.');
+              return;
+            }
+      
+            if (!/^[\w\s]+$/.test(nombrepn)) {
+              alert('El Campo nombre no debe tener caracteres especiales.');
+              return;
+            }
+      
+       
+      
+      
+      
+            var transferpn = {
+              tipopn: tipopn,// modificado
+              tipoMCOpn: tipoMCOpn,// modificado
+              origenpn: origenpn,
+              tipoCDpn: tipoCDpn,// modificado
+              tipoMCODpn: tipoMCODpn,// modificado
+              destinopn: destinopn,
+              valorpn: valorpn,
+              nombrepn: nombrepn
+              
+            };
+            //Agrega el registro al final del listado
+           // transfers.push(transfer);
+      
+      transferspn.unshift(transferpn); // Agrega el nuevo registro al principio de la lista
+      
+      
+            renderTransferspn(); // Actualiza la visualización de las transferencias
+            clearFormpn(); // Limpia el formulario después de agregar una transferencia
+            summarizeTransferspn(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+      
+      
+        /* Realiza la validacion de Campo Nombre */  
+        var nombreInputpn = document.getElementById('nombrepn');
+      var nombreErrorpn = document.getElementById('nombrepn-error');
+      
+      nombreInputpn.addEventListener('input', function() {
+        var nombrepn = nombreInputpn.value;
+        var validCharacterspn = /^[a-zA-Z0-9\s]+$/;
+      
+        if (!validCharacterspn.test(nombrepn)) {
+          nombreErrorpn.textContent = 'Ingrese solo letras, números y espacios.';
+        } else {
+          nombreErrorpn.textContent = '';
+        }
+      });
+      
+      
+        /* Realiza la validacion del Campo Cuenta Origen */  
+      var origenInputpn = document.getElementById('origenpn');
+      var origenErrorpn = document.getElementById('origenpn-error');
+      
+      origenInputpn.addEventListener('input', function() {
+        var origenpn = origenInputpn.value;
+        var validCharacterspn = /^\d{10}$/;
+      
+        if (!validCharacterspn.test(origenpn)) {
+          origenErrorpn.textContent = 'Ingrese los diez Numeros de la Cuenta.';
+        } else {
+          origenErrorpn.textContent = '';
+        }
+      });
+      
+      
+       /* Realiza la validacion del Campo Cuenta Destino */  
+       var destinoInputpn = document.getElementById('destinopn');
+      var destinoErrorpn = document.getElementById('destinopn-error');
+      
+      destinoInputpn.addEventListener('input', function() {
+        var destinopn = destinoInputpn.value;
+        var validCharacterspn = /^\d{10}$/;
+      
+        if (!validCharacterspn.test(destinopn)) {
+          destinoErrorpn.textContent = 'Ingrese los diez Numeros de la Cuenta.';
+        } else {
+          destinoErrorpn.textContent = '';
+        }
+      });
+      
+      
+        function buscarNombre() {
+                  var cuenta = document.getElementById('origenpn').value;
+                  var lineas = contenido.split('\n');
+                  var nombrepn = '';
+      
+                  for (var i = 0; i < lineas.length; i++) {
+                      var datos = lineas[i].split(',');
+                      if (datos[0] === cuenta) {
+                          nombrepn = datos[1];
+                          break;
+                      }
+                  }
+      
+                  document.getElementById('nombrepn').textContent = nombrepn;
+              }
+      
+              var contenido = '';
+      
+              function cargarArchivo(event) {
+                  var archivo = event.target.files[0];
+                  var lector = new FileReader();
+      
+                  lector.onload = function(e) {
+                      contenido = e.target.result;
+                      buscarNombre();
+                  };
+      
+                  lector.readAsText(archivo);
+              }
+      
+      
+          // Renderiza las transferencias en la tabla
+
+          
+          function renderTransferspn() {
+        var transferList = document.getElementById('transfer-listpn');
+        transferList.innerHTML = '';
+      
+        transferspn.forEach(function(transferpn, index) {
+          var row = document.createElement('tr');
+      
+          // Agregar número de celda como texto en la primera columna
+          var cellNumber = document.createElement('td');
+          cellNumber.textContent = index + 1;
+          row.appendChild(cellNumber);
+      
+          // Crear celdas solo para los campos deseados
+          var fieldsToShow = ['origenpn', 'destinopn', 'valorpn', 'nombrepn'];
+          fieldsToShow.forEach(function(key) {
+            var cell = document.createElement('td');
+            var value = transferpn[key];
+      
+            // Verificar si el campo actual es 'valor' para decidir si es editable o no
+            if (key === 'valorpn') {
+              var input = document.createElement('input');
+              input.type = 'text';
+              input.value = formatCurrency(value);
+              input.setAttribute('data-index', index);
+              input.setAttribute('data-key', key);
+              input.addEventListener('input', updateTransferpn);
+              input.addEventListener('input', function(event) {
+                var inputValue = event.target.value;
+                var cleanValue = inputValue.replace(/[^0-9.]/g, ''); // Filtrar solo números y punto decimal
+                event.target.value = cleanValue;
+              });
+      
+              cell.appendChild(input);
+            } else {
+              var span = document.createElement('span');
+              span.textContent = value;
+      
+              cell.appendChild(span);
+            }
+      
+            row.appendChild(cell);
+          });
+
+          var editButton = document.createElement('button');
+editButton.textContent = 'Editar';
+editButton.classList.add('edit-button');
+editButton.addEventListener('click', function() {
+  renderTransfersEditar();
+});
+
+var editCell = document.createElement('td');
+editCell.appendChild(editButton);
+row.appendChild(editCell);
+
+
+      
+          var deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Eliminar';
+          deleteButton.classList.add('edit-button'); // Agregar la clase 'delete-button' al botón
+          deleteButton.addEventListener('click', function() {
+            var confirmDelete = confirm('¿Estás seguro de que deseas eliminar este registro?');
+            if (confirmDelete === true) {
+            deleteTransferpn(transferpn);
+              }
+      
+          });
+
+          var deleteCell = document.createElement('td');
+          deleteCell.appendChild(deleteButton);
+          row.appendChild(deleteCell);
+      
+          row.addEventListener('click', function() {
+            highlightRow(row);
+          });
+
+          transferList.appendChild(row);
+
+
+
+
+        });
+      }
+      
+      
+  
+/*Nueva Funcion */
+/* Nueva Funcion */
+
+
+
+
+
+
+
+      
+          // Actualiza la transferencia al editar un campo
+          function updateTransferpn(event) {
+            var input = event.target;
+            var index = input.getAttribute('data-index');
+            var key = input.getAttribute('data-key');
+            var value = input.value;
+      
+            transferspn[index][key] = value;
+            var inputValue = event.target.value;
+  var cleanValue = inputValue.replace(/[^0-9.]/g, '');
+  event.target.value = cleanValue;
+
+  // Verificar si el campo está siendo editado
+  if (inputValue !== cleanValue) {
+    event.target.style.backgroundColor = 'lightgreen'; // Cambiar el fondo a verde claro
+  } else {
+    event.target.style.backgroundColor = 'lightgreen'; // Restablecer el fondo por defecto si no hay cambios
+    
+// Validar el valor ingresado
+var parsedValue = parseFloat(cleanValue);
+    var isValid = true;
+
+    if (parsedValue < 1 || getDecimalPlaces(cleanValue) !== 2 || cleanValue === '') {
+      isValid = false;
+    }
+
+    if (!isValid) {
+      event.target.style.backgroundColor = 'red'; // Cambiar el fondo a rojo para indicar un error
+      
+      event.target.focus();
+    }
+
+    }
+    
+
+            summarizeTransferspn(); // Actualiza el resumen de registros y sumatoria
+            
+  }
+
+
+
+//Funcion Editar Campos: 
+
+function renderTransfersEditar() {
+  var transferList = document.getElementById('transfer-listpn');
+  transferList.innerHTML = '';
+
+  transferspn.forEach(function(transferpn, index) {
+    var row = document.createElement('tr');
+
+    // Agregar número de celda como texto en la primera columna
+    var cellNumber = document.createElement('td');
+    cellNumber.textContent = index + 1;
+    row.appendChild(cellNumber);
+
+    // Crear celdas solo para los campos deseados
+    var fieldsToShow = ['origenpn', 'destinopn', 'valorpn', 'nombrepn'];
+    fieldsToShow.forEach(function(key) {
+      var cell = document.createElement('td');
+      var value = transferpn[key];
+
+      if (key === 'valorpn' || key === 'origenpn' || key === 'destinopn' || key === 'nombrepn') {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = value;
+        input.setAttribute('data-index', index);
+        input.setAttribute('data-key', key);
+        input.addEventListener('input', updateTransferpneditar);
+
+        cell.appendChild(input);
+      } else {
+        var span = document.createElement('span');
+        span.textContent = value;
+
+        cell.appendChild(span);
+      }
+
+      row.appendChild(cell);
+    });
+
+    var guardarButton = document.createElement('button');
+    guardarButton.textContent = 'Guardar';
+    guardarButton.classList.add('edit-button');
+    guardarButton.addEventListener('click', function() {
+  renderTransferspn();
+});
+
+var guardarCell = document.createElement('td');
+guardarCell.appendChild(guardarButton);
+row.appendChild(guardarCell);
+
+
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Eliminar';
+    deleteButton.classList.add('edit-button'); // Agregar la clase 'delete-button' al botón
+    deleteButton.addEventListener('click', function() {
+      var confirmDelete = confirm('¿Estás seguro de que deseas eliminar este registro?');
+      if (confirmDelete === true) {
+        deleteTransferpn(transferpn);
+      }
+
+    });
+    var deleteCell = document.createElement('td');
+    deleteCell.appendChild(deleteButton);
+    row.appendChild(deleteCell);
+
+    row.addEventListener('click', function() {
+      highlightRow(row);
+    });
+
+    transferList.appendChild(row);
+  });
+}
+
+// Actualiza la transferencia al editar un campo
+
+function updateTransferpneditar(event) {
+  var input = event.target;
+  var index = input.getAttribute('data-index');
+  var key = input.getAttribute('data-key');
+  var value = input.value;
+
+  // Validar y formatear el campo "valorpn"
+  if (key === 'valorpn') {
+    var cleanValue = value.replace(/[^0-9.]/g, ''); // Filtrar solo números y punto decimal
+    input.value = cleanValue;
+
+    var parsedValue = parseFloat(cleanValue);
+    var isValid = true;
+
+    if (parsedValue < 1 || getDecimalPlaces(cleanValue) !== 2 || cleanValue === '') {
+      isValid = false;
+    }
+
+    if (!isValid) {
+      input.style.backgroundColor = 'red'; // Cambiar el fondo a rojo para indicar un error
+      input.focus();
+      return;
+    }
+
+    input.style.backgroundColor = 'lightgreen'; // Cambiar el fondo a verde claro si es válido
+  }
+
+  // Validar el campo "origenpn" y "destinopn"
+  if (key === 'origenpn' || key === 'destinopn') {
+    var cleanValue = value.replace(/[^0-9]/g, ''); // Filtrar solo números
+    input.value = cleanValue;
+
+    if (cleanValue.length !== 10) {
+      input.style.backgroundColor = 'red'; // Cambiar el fondo a rojo para indicar un error
+      input.focus();
+      return;
+    }
+
+    input.style.backgroundColor = 'lightgreen'; // Cambiar el fondo a verde claro si es válido
+  }
+
+  // Validar el campo "nombrepn"
+  if (key === 'nombrepn') {
+    var cleanValue = value.replace(/[^a-zA-Z0-9\s]/g, ''); // Filtrar solo letras y números
+    input.value = cleanValue;
+
+    input.style.backgroundColor = 'lightgreen'; // Cambiar el fondo a verde claro, ya que no hay restricciones adicionales
+  }
+
+  transferspn[index][key] = input.value;
+
+  summarizeTransferspn(); // Actualiza el resumen de registros y sumatoria
+}
+
+
+
+
+
+
+
+
+
+  
+
+  function getDecimalPlaces(value) {
+  const match = ('' + value).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+
+  if (match) {
+    const decimalPart = match[1];
+    if (decimalPart) {
+      return decimalPart.length;
+    }
+  }
+
+  return 0;
+}
+
+      
+          // Elimina una transferencia de la lista
+          function deleteTransferpn(transferpn) {
+            var index = transferspn.indexOf(transferpn);
+            if (index > -1) {
+              transferspn.splice(index, 1);
+            }
+            renderTransferspn(); // Actualiza la visualización de las transferencias
+            summarizeTransferspn(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+          // Limpia el formulario
+          function clearFormpn() {
+            //document.getElementById('tipo').value = '';//modificado
+           // document.getElementById('tipoMCOpn').value = '';//modificado
+           // document.getElementById('origenpn').value = '';
+            document.getElementById('destinopn').value = '';
+            document.getElementById('valorpn').value = '';
+            document.getElementById('nombrepn').value = '';
+            //document.getElementById('tipopn').disabled = true;
+           // document.getElementById('origenpn').disabled = true;
+            //document.getElementById('tipoMCOpn').disabled = true;
+            
+          }
+      
+      
+      
+          // elimina las letras digitadas en el campo valor
+          var valorInputpn = document.getElementById('valorpn');
+valorInputpn.addEventListener('input', function() {
+  var valorpn = valorInputpn.value;
+  valorpn = valorpn.replace(/[^\d.]/g, ''); // Eliminar caracteres no numéricos excepto el punto decimal
+  valorpn = valorpn.replace(/^(\d+)\.(\d{0,2}).*$/, '$1.$2'); // Mantener solo dos dígitos decimales después del punto
+  valorInputpn.value = valorpn;
+});
+      
+      // Elimina las letras digitadas en el campo cuenta origen
+      var origenInputpn = document.getElementById('origenpn');
+      origenInputpn.addEventListener('input', function() {
+        var origenpn = origenInputpn.value;
+        origenpn = origenpn.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos excepto el punto decimal
+        origenInputpn.value = origenpn;
+      });
+      
+      // Elimina las letras digitadas en el campo cuenta destino
+      var destinoInputpn = document.getElementById('destinopn');
+      
+      destinoInputpn.addEventListener('input', function() {
+        var destinopn = destinoInputpn.value;
+        destinopn = destinopn.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos
+        destinoInputpn.value = destinopn;
+      });
+      
+      
+      // Elimina las letras digitadas en el campo cuenta Nombre
+      var nombreInputpn = document.getElementById('nombrepn');
+      nombreInputpn.addEventListener('input', function() {
+        var nombrepn = nombreInputpn.value;
+        nombrepn = nombrepn.replace(/[^a-zA-Z0-9\s]/g, ''); // Eliminar caracteres no numéricos
+        nombreInputpn.value = nombrepn;
+      });
+      
+      
+      
+      
+      /*La función getFormattedDateTime() obtiene la fecha y la hora actual y las formatea en el formato "YYYYMMDD-HHMMSS" (por ejemplo, "20230101-153000"). Puedes ajustar el formato según tus preferencias. */
+      
+      
+          function getFormattedDateTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = ('0' + (now.getMonth() + 1)).slice(-2);
+        var day = ('0' + now.getDate()).slice(-2);
+        var hours = ('0' + now.getHours()).slice(-2);
+        var minutes = ('0' + now.getMinutes()).slice(-2);
+        var seconds = ('0' + now.getSeconds()).slice(-2);
+        return day + month + year  + '-' + hours + minutes + seconds;
+      }
+      
+      
+          // Guarda las transferencias en un archivo de texto
+          function saveTransferspn() {
+          
+      // Verificar si hay campos para guardar
+      var hasFields = transferspn.some(function(transferpn) {
+          return Object.keys(transferpn).some(function(key) {
+            return transferpn[key] !== '';
+          });
+        });
+      
+        if (!hasFields) {
+          alert('No hay campos para guardar.');
+          return;
+        }
+      
+      
+          var fileName = prompt("Ingrese el nombre del archivo:");
+      
+      if (!fileName) {
+        // El usuario no ingresó un nombre de archivo
+        return;
+      }
+      
+      
+            var csvContent = 'data:text/csv;charset=utf-8,';
+            var rows = [];
+      
+            transferspn.forEach(function(transferpn) {
+      
+            // Formatear el campo "valor" sin comas y con dos posiciones decimales
+            var valorpn = parseFloat(transferpn.valorpn.replace(/,/g, '')).toFixed(2);
+            transferpn.valorpn = valorpn;
+      
+              var row = Object.values(transferpn).join(',');
+              rows.push(row);
+            });
+      
+            csvContent += rows.join('\n');
+      
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', fileName + getFormattedDateTime() + '.txt');
+            link.click();
+            
+          }
+      
+          // Actualiza el resumen de registros y sumatoria
+          function summarizeTransferspn() {
+            var summaryLabel = document.getElementById('summary-labelpn');
+            var totalTransfers = transferspn.length;
+            var totalAmount = transferspn.reduce(function(total, transferspn) {
+              return total + parseFloat(transferspn.valorpn);
+            
+            }, 0);
+            summaryLabel.textContent = 'Registros: ' + totalTransfers + ' | Sumatoria: ' + formatCurrency(totalAmount);
+          }
+      
+          // Formatea un número como moneda
+      
+          function formatCurrency(value) {
+        // Convierte el valor a número y redondea a dos decimales
+        var floatValue = parseFloat(value);
+        var roundedValue = floatValue.toFixed(2);
+      
+        // Separa los miles con comas
+        var parts = roundedValue.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      
+        // Devuelve el valor formateado
+        return parts.join(".");
+      }
+      /*
+          function formatCurrency(value) {
+            return parseFloat(value).toFixed(2);
+            
+          } */
+      
+          // Valida el formulario antes de enviarlo
+          function validateFormpn(event) {
+            event.preventDefault();
+            var fileInputpn = document.getElementById('file-inputpn');
+            if (transfers.length === 0 && fileInputpn.files.length === 0) {
+              alert('Debe agregar al menos una transferencia o cargar un archivo.');
+            } else {
+              alert('Formulario enviado correctamente.');
+            }
+          }
+      
+         // Realiza la carga de transferencias desde un archivo
+      function loadTransferspn() {
+        var fileInputpn = document.getElementById('file-inputpn');
+        var filepn = fileInputpn.files[0];
+        var readerpn = new FileReader();
+        readerpn.onload = function(event) {
+          var fileContentpn = event.target.result;
+          var filteredContentpn = filterSpecialCharacterspn(fileContentpn);
+          parseTransfersFromFilepn(filteredContentpn);
+      
+          console.log(filteredContentpn);
+          if (!isValidFilepn(filteredContentpn)) {
+          alert('El Archivo que intenta cargar es inválido.');
+          return;
+          }
+
+        };
+        readerpn.readAsText(filepn);
+      }
+      
+      
+      // Función auxiliar para filtrar caracteres especiales
+      function filterSpecialCharacterspn(content) {
+        return content.replace(/[^\w\s,.]/g, ''); // Eliminar caracteres especiales excepto comas y puntos
+      }
+      
+      
+      
+      //funcion para poner el primer caracter en Mayuscula de cada palabra
+      function convertirAMayusculas(input) {
+        var text = input.value;
+        input.value = capitalizeWords(text);
+      }
+      
+      function capitalizeWords(text) {
+        var words = text.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        return words.join(" ");
+      }
+      
+      
+      
+      
+      
+      
+          // Parsea las transferencias desde un archivo cargado
+          function parseTransfersFromFilepn(fileContentpn) {
+            var lines = fileContentpn.split('\n');
+            lines.forEach(function(line) {
+              var fields = line.split(',');
+              if (fields.length === 8) {
+                var tipopn = fields[0].trim();
+                var tipoMCOpn = fields[1].trim();
+                var origenpn = fields[2].trim();
+                var tipoCDpn = fields[3].trim();
+                var tipoMCODpn = fields[4].trim();
+                var destinopn = fields[5].trim();
+                var valorpn = parseFloat(fields[6].trim()).toFixed(2);
+                var nombrepn = fields[7].trim();
+                
+                // Eliminar los puntos y las comas del campo "nombre"
+                nombrepn = nombrepn.replace(/\./g, '').replace(/,/g, '');
+      
+                var transferpn = {
+                  tipopn: tipopn,
+                  tipoMCOpn: tipoMCOpn,
+                  origenpn: origenpn,
+                  tipoCDpn: tipoCDpn,
+                  tipoMCODpn: tipoMCODpn,
+                  destinopn: destinopn,
+                  valorpn: valorpn,
+                  nombrepn: nombrepn
+                };
+      
+                transferspn.push(transferpn);
+              }
+            });
+      
+            renderTransferspn(); // Actualiza la visualización de las transferencias
+            summarizeTransferspn(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+          //Funcion Valida si el archivo cumple con el formato.
+          function isValidFilepn(fileContentpn) {
+  var lines = fileContentpn.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var fields = lines[i].split(',');
+    if (fields.length !== 8) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+
+          // Resalta la fila seleccionada en la tabla
+          function highlightRow(row) {
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+              rows[i].classList.remove('highlighted-row');
+            }
+            row.classList.add('highlighted-row');
+          }
+          
+        </script>
+    </div>
+
+    <div class="tab-content" id="tab2">
+        
+    
+
+        <title>Masivas Interbancarias ACH</title>
+         
+        <style>
+         
+          /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #edeef1;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #tipoMCODach {
+        display: none;
+      }
+      
+      label[for="#tipoMCODach"]{
+        display: none;
+      }
+      
+      #tipoMCOach {
+        display: none;
+      }
+      
+      label[for="#tipoMCOach"]{
+        display: none;
+      }
+      
+      
+      
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .validation-message {
+        color: rgba(255, 0, 0, 0.795);
+        font-size: 12px;
+        margin-top: 5px;
+      }
+      
+      h2 {
+        margin-top: 0;
+        color: #333;
+      }
+      
+      h3 {
+        margin-top: 0;
+        color: #8b8888;
+        font-size: 16px;
+      }
+      
+      .form-container {
+        background-color: #dee0e6;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(85, 89, 95, 0.384);
+        padding: 20px;
+       
+      }
+      
+      
+      .form-container1 {
+        background-color: #dee0e6;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(85, 89, 95, 0.384);
+        padding: 20px;
+        
+      }
+      
+      /* Estilo para resaltar la fila seleccionada en la tabla */
+      .highlighted-row {
+        background-color: #ebae3e;
+      }
+      
+      /* Resto de estilos */
+      .form-actions {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: 20px;
+      }
+      
+      .form-actions button {
+        margin-right: 10px;
+      }
+      
+      .summary-label {
+        margin-top: 12px;
+        font-weight: bold;
+        
+      }
+      
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 1px;
+        
+      }
+      
+      
+      
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: #335b9c;
+      }
+      
+      small {
+        color: #888;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      button:hover {
+        background-color: #357ae8;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      
+      th,
+      td {
+        font-family: sans-serif;
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+      }
+      
+      td:last-child {
+        text-align: center;
+      }
+      
+      button.delete-button {
+        background-color: #e74c3c;
+      }
+      
+      button.delete-button:hover {
+        background-color: #c0392b;
+      }
+      /*
+      input[type="text"],
+      input[type="number"],
+      select,
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        width: 80px; /* Ajusta el ancho según tus necesidades */
+       /* height: 40px; /* Ajusta la altura según tus necesidades */
+      
+      /*}*/
+      
+      /* Opcional: Estilos adicionales para resaltar el campo si es requerido */
+      /*select[name="tipoach"]:required,
+      select[name="tipoMCOach"]:required {
+        border-color: #ccc;
+      } */
+      
+      /* Nuevos estilos */
+      .form-group {
+        display: flex;
+        
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      
+      input[type="text"],
+      input[type="number"],
+      select,
+      input[type="file"] {
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        padding: 10px;
+      }
+      
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: red;
+      }
+      
+      
+      .form-group label {
+        flex-basis: 150px; /* Ajusta el ancho según tus necesidades */
+      }
+      
+      .form-group .input-container {
+        display: flex;
+        flex-grow: 1;
+        margin-left: 20px; /* Espacio entre los campos */
+      }
+      
+      .form-group select,
+      .form-group input[type="text"] {
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        
+        padding: 7px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+      }
+      
+      /* Estilos del formulario */
+      .form-group:last-child {
+        margin-bottom: 20px;
+      }
+      
+      /* Estilos para dispositivos móviles */
+      @media (max-width: 600px) {
+        .form-container {
+          padding: 10px;
+        }
+      
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+          font-size: 12px;
+        }
+      
+        button {
+          font-size: 12px;
+        }
+      
+        table {
+          font-size: 12px;
+        }
+      }
+      
+      .file-inputach-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      /* Resto de estilos */
+      /* Eliminar duplicidad de esta regla */
+      .form-actions {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: 20px;
+      }
+      
+          
+      
+        
+        </style>
+  
+      <h2>Masivas Interbancarias ACH</h2>
+        <div class="form-container">
+      
+          
+          <h3>Complete los campos requeridos:</h3>
+          <form id="transfer-form" onsubmit="validateFormach(event)">
+      
+      
+            <div class="form-group">
+              <label for="tipoMCOach">Banco:</label>
+              <select id="tipoMCOach" name="tipoMCOach" required>
+                <option value="DOP">Pesos</option>
+                <option value="USD">Dolares</option>
+                <option value="EUR">Euros</option>
+              </select> 
+      
+              <select id="bancoach" name="bancoach" required>
+                <option value="seleccione">Seleccione El Banco</option>
+                <option value="10101070">Banco Popular Dominicano</option>
+                <option value="10101230">Banco BHD</option>
+                <option value="10101340">Banco Santa Cruz</option>
+                <option value="10101360">Banco BDI</option>
+                <option value="10101380">Banco Vimenca</option>
+                <option value="40100766">Banco Agricola de la Rep. Dom.</option>
+                <option value="13249841">Banco Qik Digital Dominicano</option>
+                <option value="10101300">Banco ADEMI</option>
+                <option value="44405900">Banco Promerica</option>
+                <option value="10171228">Banco De Las Americas</option>
+                <option value="10101390">Banco Lopez De Haro</option>
+                <option value="10101350">Banco Caribe</option>
+                <option value="11142133">Banco BellBank</option>
+                <option value="11121214">Banco Lafise</option>
+                <option value="10172714">Banco Empire</option>
+                <option value="30232423">Banco Union</option>
+                <option value="11101012">Banco Atlantico</option>
+                <option value="10171214">Banco Federal</option>
+                <option value="25311321">Banco Activo Dominicano</option>
+                <option value="11102328">Banco Banesco</option>
+                <option value="47940900">Asociacion Popular</option>
+                <option value="10231034">Asociacion La Nacional</option>
+                <option value="48991200">Asociacion Cibao</option>
+                <option value="10101030">ScotiaBank</option>
+          
+      
+              </select>
+            </div>
+           
+            <div class="form-group">
+              <label for="tipoach">Cuenta Origen:</label>
+              <select id="tipoach" name="tipoach">
+                <option value="CC">Corriente</option>
+                <option value="CA">Ahorro</option>
+              </select>
+              <input type="text" id="origenach" name="origenach" maxlength="10" required >
+              <div class="validation-message" id="origenach-error"></div>
+            </div>
+      
+            <div class="form-group">
+              <label for="tipoCDach">Cuenta Destino:</label>
+              <select id="tipoCDach" name="tipoCDach">
+                <option value="CC">Corriente</option>
+                <option value="CA">Ahorro</option>
+              </select>
+              <input type="text" id="destinoach" name="destinoach" maxlength="13" required inputmode="numeric" pattern="[0-9]{1,13}">
+              <div class="validation-message" id="destinoach-error"></div>
+            </div>
+            
+            <div class="form-group">
+              <select id="tipoMCODach" name="tipoMCODach" required>
+                <option value="DOP">Pesos</option>
+                <option value="USD">Dolares</option>
+                <option value="EUR">Euros</option>
+              </select>
+            </div>
+      
+            <div class="form-group">
+              <label for="valorach">Valor:</label>
+              <input type="text" id="valorach" name="valorach" min="0.01" max="1000000" step="0.01" required inputmode="numeric" pattern="[0-9]{0,10}">
+            </div>
+            
+      
+            <div class="form-group">
+              <label for="tidentificacionach">Identificacion:</label>
+              <select id="tidentificacionach" name="tidentificacionach" required>
+                <option value="RNC">RNC</option>
+                <option value="Cedula">Cedula</option>
+                <option value="Pasaporte">Pasaporte</option>
+              </select>
+              <input type="text" id="identificacionach" name="identificacionach" required oninput="convertirAMayusculas(this)">
+              <div class="validation-message" id="identificacionach-error"></div>
+            </div>
+      
+            <div class="form-group">
+              <label for="nombreach">Nombre:</label>
+              <input type="text" id="nombreach" name="nombreach" maxlength="22" required oninput="convertirAMayusculas(this)">
+              <div class="validation-message" id="nombreach-error"></div>
+            </div>
+      
+            <div class="form-group">
+              <label for="descripcionach">Descripcion:</label>
+              <input type="text" id="descripcionach" name="descripcionach" maxlength="55" required oninput="convertirAMayusculas(this)">
+              <div class="validation-message" id="descripcionach-error"></div>
+            </div>
+            
+           
+            <div class="form-actions">
+              <button type="button" onclick="addTransferach()">Agregar</button>
+              <button type="button" onclick="saveTransfersach()">Guardar</button>
+              <label for="file-inputach" class="file-inputach-button">Cargar Archivo</label>
+              <input type="file" id="file-inputach" accept=".txt" onchange="loadTransfersach()" style="display: none;">
+              
+      
+      
+      
+            </div>
+            
+          </form>
+      
+         
+        </div>
+        <label id="summary-labelach" class="summary-label"></label>
+        
+        <div class="form-container1">
+        <table id="transfer-tableach">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>banco</th>
+              <th>Cuenta Origen</th>
+              <th>Cuenta Destino</th>
+              <th>valor</th>
+              <th>nombre</th>
+              <th>Descripcion</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="transfer-listach"></tbody>
+       
+        </table>
+      </div>
+      
+      
+        
+      
+        <script>
+          var transfersach = []; // Almacena las transferencias agregadas
+      
+          // Agrega una transferencia a la lista de transferencias
+          function addTransferach() {
+            var tipoach = document.getElementById('tipoach').value; //Modificado Tipo 
+            var tipoMCOach = document.getElementById('tipoMCOach').value; //Modificado Tipo 
+            var origenach = document.getElementById('origenach').value;
+            var tipoMCODach = document.getElementById('tipoMCODach').value; //Modificado Tipo 
+            var valorach = document.getElementById('valorach').value;
+            var bancoach = document.getElementById('bancoach').value;
+            var tipoCDach = document.getElementById('tipoCDach').value; //Modificado Tipo
+            var destinoach = document.getElementById('destinoach').value;
+            var nombreach = document.getElementById('nombreach').value;
+            var tidentificacionach = document.getElementById('tidentificacionach').value; //Modificado Tipo
+            var identificacionach = document.getElementById('identificacionach').value; //Modificado Tipo
+            var descripcionach = document.getElementById('descripcionach').value; //Modificado Tipo
+        
+            //var tipoach = document.getElementById('tipoach').value;
+            var tipoMCODach = tipoMCODach;
+      
+            if (origenach.trim() === '' || destinoach.trim() === '' || valorach.trim() === '' || nombreach.trim() === ''  || identificacionach.trim() === '' || descripcionach.trim() === ''|| bancoach.trim() === 'seleccione') {
+              alert('Todos los campos son requeridos.');
+              return;
+            }
+      
+            if (origenach.length !== 10 ) {
+              alert('La cuenta origen deben tener exactamente 10 Numeros.');
+              return;
+            }
+      
+            
+      
+      
+            if (!/^[0-9]{10}$/.test(origenach)) {
+              alert('La Cuenta Origen debe tener 10 numeros');
+              return;
+            }
+            /*if (!/^[0-9]$/.test(destinoach)) {
+              alert('La Cuenta Destino debe tener numeros');
+              return;
+            }
+      */
+            if (!/^\d+\.\d{2}$/.test(valorach)) {
+              alert('El valor debe tener dos decimales.');
+              return;
+            }
+      
+            if (!/^[\w\s]+$/.test(nombreach)) {
+              alert('El Campo NOMBRE no debe tener caracteres especiales.');
+              return;
+            }
+      
+            if (!/^[\w\s]+$/.test(descripcionach)) {
+              alert('El Campo DESCRIPCION no debe tener caracteres especiales.');
+              return;
+            }
+      
+       
+      
+      
+            var transfer = {
+              tipoach: tipoach,// modificado
+              tipoMCOach: tipoMCOach,// modificado
+              origenach: origenach,
+             // tipoMCODach: tipoMCODach,// modificado
+             bancoach: bancoach,
+              tipoCDach: tipoCDach,// modificado
+              destinoach: destinoach,
+              valorach: valorach,
+              nombreach: nombreach,
+              tidentificacionach: tidentificacionach,
+              identificacionach: identificacionach,
+              descripcionach: descripcionach
+              
+            };
+            //Agrega el registro al final del listado
+           // transfersach.push(transfer);
+      
+      transfersach.unshift(transfer); // Agrega el nuevo registro al principio de la lista
+      
+      
+            rendertransfersach(); // Actualiza la visualización de las transferencias
+            clearFormach(); // Limpia el formulario después de agregar una transferencia
+            summarizetransfersach(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+      
+      
+      
+      
+        /* Realiza la validacion de Campo Nombre */  
+        var nombreInputach = document.getElementById('nombreach');
+      var nombreErrorach = document.getElementById('nombreach-error');
+      
+      nombreInputach.addEventListener('input', function() {
+        var nombreach = nombreInputach.value;
+        var validCharactersach = /^[a-zA-Z0-9\s]+$/;
+      
+        if (!validCharactersach.test(nombreach)) {
+          nombreErrorach.textContent = 'Ingrese solo letras, números y espacios.';
+        } else {
+          nombreErrorach.textContent = '';
+        }
+      });
+      
+      
+       /* Realiza la validacion de Campo identificacion */  
+        var identificacionInputach = document.getElementById('identificacionach');
+      var identificacionErrorach = document.getElementById('identificacionach-error');
+      
+      identificacionInputach.addEventListener('input', function() {
+        var identificacionach = identificacionInputach.value;
+        var validCharactersach = /^[a-zA-Z0-9]+$/;
+      
+        if (!validCharactersach.test(identificacionach)) {
+          identificacionErrorach.textContent = 'Ingrese solo letras y números';
+        } else {
+          identificacionErrorach.textContent = '';
+        }
+      });
+      
+      
+      
+      /* Realiza la validacion de Campo descripcion */  
+        var descripcionInputach = document.getElementById('descripcionach');
+      var descripcionErrorach = document.getElementById('descripcionach-error');
+      
+      descripcionInputach.addEventListener('input', function() {
+        var descripcionach = descripcionInputach.value;
+        var validCharactersach = /^[a-zA-Z0-9\s]+$/;
+      
+        if (!validCharactersach.test(descripcionach)) {
+          descripcionErrorach.textContent = 'Ingrese solo letras, números y espacios.';
+        } else {
+          descripcionErrorach.textContent = '';
+        }
+      });
+      
+      
+      
+      
+        /* Realiza la validacion del Campo Cuenta Origen */  
+      var origenInputach = document.getElementById('origenach');
+      var origenErrorach = document.getElementById('origenach-error');
+      
+      origenInputach.addEventListener('input', function() {
+        var origenach = origenInputach.value;
+        var validCharactersach = /^\d{10}$/;
+      
+        if (!validCharactersach.test(origenach)) {
+          origenErrorach.textContent = 'Ingrese los diez Numeros de la Cuenta.';
+        } else {
+          origenErrorach.textContent = '';
+        }
+      });
+      
+      
+       //Realiza Validacion del Campo Destino.
+       var destinoInputach = document.getElementById('destinoach');
+      var destinoErrorach = document.getElementById('destinoach-error');
+      destinoInputach.addEventListener('input', function() {
+        var destinoach = destinoInputach.value;
+        var validCharactersach = /^[0-9]{1,13}$/;  // Expresión regular actualizada
+      
+        if (!validCharactersach.test(destinoach)) {
+          destinoErrorach.textContent = 'Ingrese el numero de cuenta destino, maximo 13 numeros.';
+        } else {
+          destinoErrorach.textContent = '';
+        }
+      });
+
+// Elimina las letras digitadas en el campo cuenta Origen
+      origenInputach.addEventListener('input', function() {
+      var origenach = origenInputach.value;
+      origenach = origenach.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos
+      origenInputach.value = origenach;
+});
+
+
+      // Elimina las letras digitadas en el campo cuenta destino
+      var destinoInputach = document.getElementById('destinoach');
+      destinoInputach.addEventListener('input', function() {
+      var destinoach = destinoInputach.value;
+      destinoach = destinoach.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos
+      destinoInputach.value = destinoach;
+});
+      
+      
+      // Elimina las Caracteres especiales digitadas en el campo cuenta Nombre
+      var nombreInputach = document.getElementById('nombreach');
+      nombreInputach.addEventListener('input', function() {
+        var nombreach = nombreInputach.value;
+        nombreach = nombreach.replace(/[^a-zA-Z0-9\s]/g, ''); // Eliminar caracteres no numéricos
+        nombreInputach.value = nombreach;
+      });
+      
+      
+      
+      // Elimina las letras digitadas en el campo cuenta Descripcion
+      var descripcionach = document.getElementById('descripcionach');
+      descripcionInputach.addEventListener('input', function() {
+        var descripcionach = descripcionInputach.value;
+        descripcionach = descripcionach.replace(/[^a-zA-Z0-9\s]/g, ''); // Eliminar caracteres no numéricos
+        descripcionInputach.value = descripcionach;
+      });
+      
+      
+      //dependiendo que tipo de documento elegimos se muestra 
+      var tipoDocumentoSelectach = document.getElementById('tidentificacionach');
+      var documentoInputach = document.getElementById('identificacionach');
+      
+      
+      
+      
+      documentoInputach.addEventListener('input', function(event) {
+        var tipoDocumentoach = tipoDocumentoSelectach.value;
+        var documentoach = event.target.value;
+        
+        if (tipoDocumentoach === 'RNC') {
+          documentoach = documentoach.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+          
+          if (documentoach.length > 9) {
+            documentoach = documentoach.slice(0, 9); // Limitar a 9 caracteres
+          }
+        } else if (tipoDocumentoach === 'Cedula') {
+          documentoach = documentoach.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+          
+          if (documentoach.length > 11) {
+            documentoach = documentoach.slice(0, 11); // Limitar a 11 caracteres
+          }
+        } else if (tipoDocumentoach === 'Pasaporte') {
+          documentoach = documentoach.replace(/[^a-zA-Z0-9]/g, ''); // Eliminar caracteres no alfanuméricos
+        }
+      
+        event.target.value = documentoach;
+      });
+      
+      
+      
+      
+      
+      // elimina las letras digitadas en el campo valor
+      var valorInputach = document.getElementById('valorach');
+      
+      valorInputach.addEventListener('input', function() {
+        var valorach = valorInputach.value;
+        valorach = valorach.replace(/[^\d.]/g, ''); // Eliminar caracteres no numéricos excepto el punto decimal
+        valorach = valorach.replace(/^(\d+\.\d{0,2})\d*$/, '$1'); // Mantener solo dos dígitos decimales
+        valorInputach.value = valorach;
+      });
+      
+      // Elimina las letras digitadas en el campo cuenta origen
+      var origenInputach = document.getElementById('origenach');
+      origenInputach.addEventListener('input', function() {
+        var origenach = origenInputach.value;
+        origenach = origenach.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos excepto el punto decimal
+        origenInputach.value = origenach;
+      });
+      
+      // Elimina las letras digitadas en el campo cuenta destino
+      var destinoInputach = document.getElementById('destinoach');
+      
+      destinoInputach.addEventListener('input', function() {
+        var destinoach = destinoInputach.value;
+        destinoach = destinoach.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos
+        destinoInputach.value = destinoach;
+      });
+      
+      
+      
+      function convertirAMayusculas(input) {
+        var text = input.value;
+        input.value = capitalizeWords(text);
+      }
+      
+      function capitalizeWords(text) {
+        var words = text.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        return words.join(" ");
+      }
+      
+          
+      
+      
+      
+      
+        // Código previo omitido...
+      
+        // Función para obtener el nombre del banco a partir de su ID
+        function getNombreBancoach(id) {
+          var select = document.getElementById('bancoach');
+          for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === id) {
+              return select.options[i].textContent;
+            }
+          }
+          return '';
+        }
+      
+        // Renderiza las transferencias en la tabla
+        function rendertransfersach() {
+          var transferList = document.getElementById('transfer-listach');
+          transferList.innerHTML = '';
+      
+          transfersach.forEach(function(transfer, index) {
+            var row = document.createElement('tr');
+      
+            // Agregar número de celda como texto en la primera columna
+            var cellNumber = document.createElement('td');
+            cellNumber.textContent = index + 1;
+            row.appendChild(cellNumber);
+      
+            // Crear celdas solo para los campos deseados
+            var fieldsToShow = ['bancoach', 'origenach', 'destinoach', 'valorach', 'nombreach','descripcionach'];
+            fieldsToShow.forEach(function(key) {
+              var cell = document.createElement('td');
+              var value = transfer[key];
+      
+              // Verificar si el campo actual es 'banco' para obtener el nombre
+              if (key === 'bancoach') {
+                value = getNombreBancoach(value);
+              }
+      
+              // Verificar si el campo actual es 'valor' para decidir si es editable o no
+              if (key === 'valorach') {
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.value = formatCurrency(value);
+                input.setAttribute('data-index', index);
+                input.setAttribute('data-key', key);
+                input.addEventListener('input', updateTransferach);
+                input.addEventListener('input', function(event) {
+                  var inputValue = event.target.value;
+                  var cleanValue = inputValue.replace(/[^0-9.]/g, ''); // Filtrar solo números y punto decimal
+                  event.target.value = cleanValue;
+                });
+      
+                cell.appendChild(input);
+              } else {
+                var span = document.createElement('span');
+                span.textContent = value;
+      
+                cell.appendChild(span);
+              }
+      
+              row.appendChild(cell);
+            });
+      
+            var deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Eliminar';
+                deleteButton.classList.add('delete-button'); // Agregar la clase 'delete-button' al botón
+                deleteButton.addEventListener('click', function() {
+                  var confirmDelete = confirm('¿Estás seguro de que deseas eliminar este registro?');
+                  if (confirmDelete === true) {
+                  deleteTransferach(transfer);
+                    }
+            
+                });
+      
+      
+            var deleteCell = document.createElement('td');
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+      
+            row.addEventListener('click', function() {
+              highlightRow(row);
+            });
+      
+            transferList.appendChild(row);
+          });
+        }
+      
+        // Resto del código omitido...
+      
+      
+      
+      
+      
+          // Actualiza la transferencia al editar un campo
+          function updateTransferach(event) {
+            var input = event.target;
+            var index = input.getAttribute('data-index');
+            var key = input.getAttribute('data-key');
+            var value = input.value;
+      
+            transfersach[index][key] = value;
+            summarizetransfersach(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+          // Elimina una transferencia de la lista
+          function deleteTransferach(transferach) {
+            var index = transfersach.indexOf(transferach);
+            if (index > -1) {
+              transfersach.splice(index, 1);
+            }
+            rendertransfersach(); // Actualiza la visualización de las transferencias
+            summarizetransfersach(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+          // Limpia el formulario
+          function clearFormach() {
+            //document.getElementById('tipoach').value = '';//modificado
+           // document.getElementById('tipoMCOach').value = '';//modificado
+           // document.getElementById('origenach').value = '';
+            document.getElementById('destinoach').value = '';
+            document.getElementById('valorach').value = '';
+            document.getElementById('nombreach').value = '';
+            document.getElementById('tidentificacionach').value = '';
+            document.getElementById('identificacionach').value = '';
+            document.getElementById('descripcionach').value = '';
+            document.getElementById('tipoach').disabled = true;
+            document.getElementById('origenach').disabled = true;
+            document.getElementById('tipoMCOach').disabled = true;
+            
+          }
+      
+      /*La función getFormattedDateTime() obtiene la fecha y la hora actual y las formatea en el formato "YYYYMMDD-HHMMSS" (por ejemplo, "20230101-153000"). Puedes ajustar el formato según tus preferencias. */
+      
+      
+          function getFormattedDateTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = ('0' + (now.getMonth() + 1)).slice(-2);
+        var day = ('0' + now.getDate()).slice(-2);
+        var hours = ('0' + now.getHours()).slice(-2);
+        var minutes = ('0' + now.getMinutes()).slice(-2);
+        var seconds = ('0' + now.getSeconds()).slice(-2);
+        return day + month + year  + '-' + hours + minutes + seconds;
+      }
+      
+      
+          // Guarda las transferencias en un archivo de texto
+          function saveTransfersach() {
+          
+      // Verificar si hay campos para guardar
+      var hasFields = transfersach.some(function(transfer) {
+          return Object.keys(transfer).some(function(key) {
+            return transfer[key] !== '';
+          });
+        });
+      
+        if (!hasFields) {
+          alert('No hay campos para guardar.');
+          return;
+        }
+      
+      
+          var fileName = prompt("Ingrese el nombre del archivo:");
+      
+      if (!fileName) {
+        // El usuario no ingresó un nombre de archivo
+        return;
+      }
+      
+      
+            var csvContent = 'data:text/csv;charset=utf-8,';
+            var rows = [];
+      
+            transfersach.forEach(function(transfer) {
+      
+            // Formatear el campo "valor" sin comas y con dos posiciones decimales
+            var valorach = parseFloat(transfer.valorach.replace(/,/g, '')).toFixed(2);
+            transfer.valorach = valorach;
+      
+              var row = Object.values(transfer).join(',');
+              rows.push(row);
+            });
+      
+            csvContent += rows.join('\n');
+      
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', fileName + getFormattedDateTime() + '.txt');
+            link.click();
+            
+          }
+      
+          // Actualiza el resumen de registros y sumatoria
+          function summarizetransfersach() {
+            var summaryLabel = document.getElementById('summary-labelach');
+            var totaltransfersach = transfersach.length;
+            var totalAmount = transfersach.reduce(function(total, transfer) {
+              return total + parseFloat(transfer.valorach);
+            
+            }, 0);
+            summaryLabel.textContent = 'Registros: ' + totaltransfersach + ' | Sumatoria: ' + formatCurrency(totalAmount);
+          }
+      
+          // Formatea un número como moneda
+      
+          function formatCurrency(value) {
+        // Convierte el valor a número y redondea a dos decimales
+        var floatValue = parseFloat(value);
+        var roundedValue = floatValue.toFixed(2);
+      
+        // Separa los miles con comas
+        var parts = roundedValue.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      
+        // Devuelve el valor formateado
+        return parts.join(".");
+      }
+      /*
+          function formatCurrency(value) {
+            return parseFloat(value).toFixed(2);
+            
+          } */
+      
+          // Valida el formulario antes de enviarlo
+          function validateFormach(event) {
+            event.preventDefault();
+            var fileInput = document.getElementById('file-inputach');
+            if (transfersach.length === 0 && fileInput.files.length === 0) {
+              alert('Debe agregar al menos una transferencia o cargar un archivo.');
+            } else {
+              alert('Formulario enviado correctamente.');
+            }
+          }
+      
+         // Realiza la carga de transferencias desde un archivo
+      function loadTransfersach() {
+        var fileInput = document.getElementById('file-inputach');
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          var fileContentach = event.target.result;
+          var filteredContentach = filterSpecialCharacters(fileContentach);
+          parseTransfersFromFileach(filteredContentach);
+      
+          console.log(filteredContentach);
+        };
+        reader.readAsText(file);
+      }
+      
+      
+      // Función auxiliar para filtrar caracteres especiales
+      function filterSpecialCharacters(content) {
+        return content.replace(/[^\w\s,.]/g, ''); // Eliminar caracteres especiales excepto comas y puntos
+      }
+      
+      
+          // Parsea las transferencias desde un archivo cargado
+          function parseTransfersFromFileach(fileContentach) {
+            var lines = fileContentach.split('\n');
+            lines.forEach(function(line) {
+              var fields = line.split(',');
+              if (fields.length === 11) {
+                var tipoach = fields[0].trim();
+                var tipoMCOach = fields[1].trim();
+                var origenach = fields[2].trim();
+                //var tipoMCODach = fields[3].trim();
+                var bancoach = fields[3].trim();
+                var tipoCDach = fields[4].trim();
+                var destinoach = fields[5].trim();
+                var valorach = parseFloat(fields[6].trim()).toFixed(2);
+                var nombreach = fields[7].trim();
+                var tidentificacionach = fields[8].trim();
+                var identificacionach = fields[9].trim();
+                var descripcionach = fields[10].trim();
+                
+      
+              var transfer = {
+              tipoach: tipoach,// modificado
+              tipoMCOach: tipoMCOach,// modificado
+              origenach: origenach,
+              //tipoMCODach: tipoMCODach,// modificado
+              bancoach: bancoach,
+              tipoCDach: tipoCDach,// modificado
+              destinoach: destinoach,
+              valorach: valorach,
+              nombreach: nombreach,
+              tidentificacionach: tidentificacionach,
+              identificacionach: identificacionach,
+              descripcionach: descripcionach
+               
+            };
+      
+                transfersach.push(transfer);
+              }
+            });
+      
+            rendertransfersach(); // Actualiza la visualización de las transferencias
+            summarizetransfersach(); // Actualiza el resumen de registros y sumatoria
+          }
+      
+          // Resalta la fila seleccionada en la tabla
+          function highlightRow(row) {
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+              rows[i].classList.remove('highlighted-row');
+            }
+            row.classList.add('highlighted-row');
+          }
+          
+        </script>
+      
+
+
+
+
+
+    </div>
+
+    <div class="tab-content" id="tab3">
+        
+      <head>
+        <title>Masivas Interbancarias</title>
+        
+        <style>
+         
+          /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #edeef1;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #tipoMCODlb {
+        display: none;
+      }
+      
+      label[for="#tipoMCODlb"]{
+        display: none;
+      }
+      
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .validation-message {
+        color: rgba(255, 0, 0, 0.795);
+        font-size: 12px;
+        margin-top: 5px;
+      }
+      
+      h2 {
+        margin-top: 0;
+        color: #333;
+      }
+      
+      h3 {
+        margin-top: 0;
+        color: #8b8888;
+        font-size: 16px;
+      }
+      
+      .form-container {
+        background-color: #dee0e6;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(85, 89, 95, 0.384);
+        padding: 20px;
+       
+      }
+      
+      
+      .form-container1 {
+        background-color: #dee0e6;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(85, 89, 95, 0.384);
+        padding: 20px;
+        
+      }
+      
+      /* Estilo para resaltar la fila seleccionada en la tabla */
+      .highlighted-row {
+        background-color: #ebae3e;
+      }
+      
+      /* Resto de estilos */
+      .form-actions {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: 20px;
+      }
+      
+      .form-actions button {
+        margin-right: 10px;
+      }
+      
+      .summary-label {
+        margin-top: 12px;
+        font-weight: bold;
+        
+      }
+      
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 1px;
+        
+      }
+      
+      
+      
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: #335b9c;
+      }
+      
+      small {
+        color: #888;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      button:hover {
+        background-color: #357ae8;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      
+      th,
+      td {
+        font-family: sans-serif;
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+      }
+      
+      td:last-child {
+        text-align: center;
+      }
+      
+      button.delete-button {
+        background-color: #e74c3c;
+      }
+      
+      button.delete-button:hover {
+        background-color: #c0392b;
+      }
+      /*
+      input[type="text"],
+      input[type="number"],
+      select,
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        width: 80px; /* Ajusta el ancho según tus necesidades */
+       /* height: 40px; /* Ajusta la altura según tus necesidades */
+      
+      /*}*/
+      
+      /* Opcional: Estilos adicionales para resaltar el campo si es requerido */
+      /*select[name="tipolb"]:required,
+      select[name="tipoMCOlb"]:required {
+        border-color: #ccc;
+      } */
+      
+      /* Nuevos estilos */
+      .form-group {
+        display: flex;
+        
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      
+      input[type="text"],
+      input[type="number"],
+      select,
+      input[type="file"] {
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        padding: 10px;
+      }
+      
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: red;
+      }
+      
+      
+      .form-group label {
+        flex-basis: 150px; /* Ajusta el ancho según tus necesidades */
+      }
+      
+      .form-group .input-container {
+        display: flex;
+        flex-grow: 1;
+        margin-left: 20px; /* Espacio entre los campos */
+      }
+      
+      .form-group select,
+      .form-group input[type="text"] {
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+        
+        padding: 7px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s;
+      }
+      
+      /* Estilos del formulario */
+      .form-group:last-child {
+        margin-bottom: 20px;
+      }
+      
+      /* Estilos para dispositivos móviles */
+      @media (max-width: 600px) {
+        .form-container {
+          padding: 10px;
+        }
+      
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+          font-size: 12px;
+        }
+      
+        button {
+          font-size: 12px;
+        }
+      
+        table {
+          font-size: 12px;
+        }
+      }
+      
+      .file-inputlb-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #4d90fe;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      /* Resto de estilos */
+      /* Eliminar duplicidad de esta regla */
+      .form-actions {
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: 20px;
+      }
+      
+      
+        
+        </style>
+      </head>
+      <body>
+        <h2>Masivas Interbancarias, Pagos al Instante BCRD.</h2>
+        <div class="form-container">
+          <h3>Complete los campos requeridos:</h3>
+          <form id="transfer-form" onsubmit="validateForm(event)">
+            <!-- Campos del formulario... -->
+            <form id="transfer-form" onsubmit="validateForm(event)">
+      
+      
+              <div class="form-group">
+                <label for="tipoMCOlb">Moneda:</label>
+                <select id="tipoMCOlb" name="tipoMCOlb" required>
+                  <option value="DOP">Pesos</option>
+                  <option value="USD">Dolares</option>
+                  <option value="EUR">Euros</option>
+                </select> 
+        
+                <select id="bancolb" name="bancolb" required>
+                  <option value="seleccione">Seleccione El Banco</option>
+                  <option value="BPDODOSXXXX">Banco Popular Dominicano</option>
+                  <option value="BCBHDOSDXXX">Banco BHD</option>
+                  <option value="SCRZDOSDXXX">Banco Santa Cruz</option>
+                  <option value="BBDIDOSDXXX">Banco BDI</option>
+                  <option value="VIMEDOSDXXX">Banco Vimenca</option>
+                  <option value="QDDMDOSDXXX">Banco Qik Digital Dominicano</option>
+                  <option value="AHCMDOSDXXX">Banco ADEMI</option>
+                  <option value="PRHRDOSDXXX">Banco Promerica</option>
+                  <option value="AHCSDOSDXXX">Banco De Las Americas</option>
+                  <option value="BLDHDOSDXXX">Banco Lopez De Haro</option>
+                  <option value="STGODOSDXXX">Banco Caribe</option>
+                  <option value="BELNDOSDXXX">Banco BellBank</option>
+                  <option value="BCCEDOSDXXX">Banco Lafise</option>
+                  <option value="AHREDOS1XXX">Banco Empire</option>
+                  <option value="UNONDOSDXXX">Banco Union</option>
+                  <option value="BAACDOS1XXX">Banco Atlantico</option>
+                  <option value="AHCEDOS1XXX">Banco Federal</option>
+                  <option value="PVDLDOSDXXX">Banco Activo Dominicano</option>
+                  <option value="BANSDOSDXXX">Banco Banesco</option>
+                  <option value="APOPDOSXXXX">Asociacion Popular</option>
+                  <option value="ANAYDOS1XXX">Asociacion La Nacional</option>
+                  <option value="ACIBDOSXXXX">Asociacion Cibao</option>
+            
+        
+                </select>
+              </div>
+             
+              <div class="form-group">
+                <label for="tipolb">Cuenta Origen:</label>
+                <select id="tipolb" name="tipolb">
+                  <option value="CC">Corriente</option>
+                  <option value="CA">Ahorro</option>
+                </select>
+                <input type="text" id="origenlb" name="origenlb" maxlength="10" required >
+                <div class="validation-message" id="origenlb-error"></div>
+              </div>
+        
+              <div class="form-group">
+                <label for="tipoCDlb">Cuenta Destino:</label>
+                <select id="tipoCDlb" name="tipoCDlb">
+                  <option value="CC">Corriente</option>
+                  <option value="CA">Ahorro</option>
+                </select>
+                <input type="text" id="destinolb" name="destinolb" maxlength="13" required inputmode="numeric" pattern="[0-9]{1,13}">
+                <div class="validation-message" id="destinolb-error"></div>
+              </div>
+              
+              <div class="form-group">
+                <select id="tipoMCODlb" name="tipoMCODlb" required>
+                  <option value="DOP">Pesos</option>
+                  <option value="USD">Dolares</option>
+                  <option value="EUR">Euros</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="valorlb">Valor:</label>
+                <input type="text" id="valorlb" name="valorlb" min="0.01" max="1000000" step="0.01" required inputmode="numeric" pattern="[0-9]{0,10}">
+              </div>
+              
+        
+              <div class="form-group">
+                <label for="tidentificacionlb">Identificacion:</label>
+                <select id="tidentificacionlb" name="tidentificacionlb" required>
+                  <option value="RNC">RNC</option>
+                  <option value="Cedula">Cedula</option>
+                  <option value="Pasaporte">Pasaporte</option>
+                </select>
+                <input type="text" id="identificacionlb" name="identificacionlb" required oninput="convertirAMayusculas(this)">
+                <div class="validation-message" id="identificacionlb-error"></div>
+              </div>
+        
+              <div class="form-group">
+                <label for="nombrelb">Nombre:</label>
+                <input type="text" id="nombrelb" name="nombrelb" maxlength="22" required oninput="convertirAMayusculas(this)">
+                <div class="validation-message" id="nombrelb-error"></div>
+              </div>
+        
+              <div class="form-group">
+                <label for="descripcionlb">Descripcion:</label>
+                <input type="text" id="descripcionlb" name="descripcionlb" maxlength="55" required oninput="convertirAMayusculas(this)">
+                <div class="validation-message" id="descripcionlb-error"></div>
+              </div>
+              
+            
+              <div class="form-actions">
+                <button type="button" onclick="addTransferlb()">Agregar</button>
+                <button type="button" onclick="saveTransfers()">Guardar</button>
+                <label for="file-inputlb" class="file-inputlb-button">Cargar Archivo</label>
+                <input type="file" id="file-inputlb" accept=".txt" onchange="loadTransferslb()" style="display: none;">
+                
+        
+        
+        
+              </div>
+              
+            </form>
+      
+          </form>
+        </div>
+        <label id="summary-labellb" class="summary-label"></label>
+        <div class="form-container1">
+          <table id="transfer-tablelb">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>banco</th>
+                <th>Cuenta Origen</th>
+                <th>Cuenta Destino</th>
+                <th>valor</th>
+                <th>nombre</th>
+                <th>Descripcion</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="transfer-listlb"></tbody>
+          </table>
+        </div>
+      </body>
+  
+
+
+  
+
+  <script>
+    var transfers = []; // Almacena las transferencias agregadas
+
+    // Agrega una transferencia a la lista de transferencias
+    function addTransferlb() {
+      var tipolb = document.getElementById('tipolb').value; //Modificado Tipo 
+      var tipoMCOlb = document.getElementById('tipoMCOlb').value; //Modificado Tipo 
+      var origenlb = document.getElementById('origenlb').value;
+      var tipoMCODlb = document.getElementById('tipoMCODlb').value; //Modificado Tipo 
+      var valorlb = document.getElementById('valorlb').value;
+      var bancolb = document.getElementById('bancolb').value;
+      var tipoCDlb = document.getElementById('tipoCDlb').value; //Modificado Tipo
+      var destinolb = document.getElementById('destinolb').value;
+      var nombrelb = document.getElementById('nombrelb').value;
+      var tidentificacionlb = document.getElementById('tidentificacionlb').value; //Modificado Tipo
+      var identificacionlb = document.getElementById('identificacionlb').value; //Modificado Tipo
+      var descripcionlb = document.getElementById('descripcionlb').value; //Modificado Tipo
+  
+      //var tipolb = document.getElementById('tipolb').value;
+      var tipoMCODlb = tipoMCODlb;
+
+      if (origenlb.trim() === '' || destinolb.trim() === '' || valorlb.trim() === '' || nombrelb.trim() === ''  || identificacionlb.trim() === '' || descripcionlb.trim() === ''|| bancolb.trim() === 'seleccione') {
+        alert('Todos los campos son requeridos.');
+        return;
+      }
+
+      if (origenlb.length !== 10 ) {
+        alert('La cuenta origen deben tener exactamente 10 Numeros.');
+        return;
+      }
+
+      
+
+
+      if (!/^[0-9]{10}$/.test(origenlb)) {
+        alert('La Cuenta Origen debe tener 10 numeros');
+        return;
+      }
+      /*if (!/^[0-9]$/.test(destinolb)) {
+        alert('La Cuenta Destino debe tener numeros');
+        return;
+      }
+*/
+      if (!/^\d+\.\d{2}$/.test(valorlb)) {
+        alert('El valor debe tener dos decimales.');
+        return;
+      }
+
+      if (!/^[\w\s]+$/.test(nombrelb)) {
+        alert('El Campo NOMBRE no debe tener caracteres especiales.');
+        return;
+      }
+
+      if (!/^[\w\s]+$/.test(descripcionlb)) {
+        alert('El Campo DESCRIPCION no debe tener caracteres especiales.');
+        return;
+      }
+
+ 
+
+
+      var transfer = {
+        tipolb: tipolb,// modificado
+        tipoMCOlb: tipoMCOlb,// modificado
+        origenlb: origenlb,
+        tipoMCODlb: tipoMCODlb,// modificado
+        valorlb: valorlb,
+        bancolb: bancolb,
+        tipoCDlb: tipoCDlb,// modificado
+        destinolb: destinolb,
+        nombrelb: nombrelb,
+        tidentificacionlb: tidentificacionlb,
+        identificacionlb: identificacionlb,
+        descripcionlb: descripcionlb
+        
+      };
+      //Agrega el registro al final del listado
+     // transfers.push(transfer);
+
+transfers.unshift(transfer); // Agrega el nuevo registro al principio de la lista
+
+
+      renderTransferslb(); // Actualiza la visualización de las transferencias
+      clearForm(); // Limpia el formulario después de agregar una transferencia
+      summarizeTransfers(); // Actualiza el resumen de registros y sumatoria
+    }
+
+
+
+
+
+  /* Realiza la validacion de Campo Nombre */  
+  var nombreInput = document.getElementById('nombrelb');
+var nombreError = document.getElementById('nombrelb-error');
+
+nombreInput.addEventListener('input', function() {
+  var nombrelb = nombreInput.value;
+  var validCharacters = /^[a-zA-Z0-9\s]+$/;
+
+  if (!validCharacters.test(nombrelb)) {
+    nombreError.textContent = 'Ingrese solo letras, números y espacios.';
+  } else {
+    nombreError.textContent = '';
+  }
+});
+
+
+ /* Realiza la validacion de Campo identificacion */  
+  var identificacionInput = document.getElementById('identificacionlb');
+var identificacionError = document.getElementById('identificacionlb-error');
+
+identificacionInput.addEventListener('input', function() {
+  var identificacionlb = identificacionInput.value;
+  var validCharacters = /^[a-zA-Z0-9]+$/;
+
+  if (!validCharacters.test(identificacionlb)) {
+    identificacionError.textContent = 'Ingrese solo letras y números';
+  } else {
+    identificacionError.textContent = '';
+  }
+});
+
+
+
+/* Realiza la validacion de Campo descripcion */  
+  var descripcionInput = document.getElementById('descripcionlb');
+var descripcionError = document.getElementById('descripcionlb-error');
+
+descripcionInput.addEventListener('input', function() {
+  var descripcionlb = descripcionInput.value;
+  var validCharacters = /^[a-zA-Z0-9\s]+$/;
+
+  if (!validCharacters.test(descripcionlb)) {
+    descripcionError.textContent = 'Ingrese solo letras, números y espacios.';
+  } else {
+    descripcionError.textContent = '';
+  }
+});
+
+
+
+
+  /* Realiza la validacion del Campo Cuenta Origen */  
+var origenInput = document.getElementById('origenlb');
+var origenError = document.getElementById('origenlb-error');
+
+origenInput.addEventListener('input', function() {
+  var origenlb = origenInput.value;
+  var validCharacters = /^\d{10}$/;
+
+  if (!validCharacters.test(origenlb)) {
+    origenError.textContent = 'Ingrese los diez Numeros de la Cuenta.';
+  } else {
+    origenError.textContent = '';
+  }
+});
+
+
+ /* Realiza la validacion del Campo Cuenta Destino */  
+ var destinoInput = document.getElementById('destinolb');
+var destinoError = document.getElementById('destinolb-error');
+
+
+// Realiza Validacion del Campo Destino
+destinoInput.addEventListener('input', function() {
+  var destinolb = destinoInput.value;
+  var validCharacters = /^[0-9]{1,13}$/;  // Expresión regular actualizada
+
+  if (!validCharacters.test(destinolb)) {
+    destinoError.textContent = 'Ingrese el numero de cuenta destino, maximo 13 numeros.';
+  } else {
+    destinoError.textContent = '';
+  }
+});
+
+
+// Elimina las Caracteres especiales digitadas en el campo cuenta Nombre
+var nombreInput = document.getElementById('nombrelb');
+nombreInput.addEventListener('input', function() {
+  var nombrelb = nombreInput.value;
+  nombrelb = nombrelb.replace(/[^a-zA-Z0-9\s]/g, ''); // Eliminar caracteres no numéricos
+  nombreInput.value = nombrelb;
+});
+
+
+
+// Elimina las letras digitadas en el campo cuenta Descripcion
+var descripcionlb = document.getElementById('descripcionlb');
+descripcionInput.addEventListener('input', function() {
+  var descripcionlb = descripcionInput.value;
+  descripcionlb = descripcionlb.replace(/[^a-zA-Z0-9\s]/g, ''); // Eliminar caracteres no numéricos
+  descripcionInput.value = descripcionlb;
+});
+
+
+//dependiendo que tipo de documento elegimos se muestra 
+var tipoDocumentoSelect = document.getElementById('tidentificacionlb');
+var documentoInput = document.getElementById('identificacionlb');
+
+
+
+
+documentoInput.addEventListener('input', function(event) {
+  var tipoDocumento = tipoDocumentoSelect.value;
+  var documento = event.target.value;
+  
+  if (tipoDocumento === 'RNC') {
+    documento = documento.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+    
+    if (documento.length > 9) {
+      documento = documento.slice(0, 9); // Limitar a 9 caracteres
+    }
+  } else if (tipoDocumento === 'Cedula') {
+    documento = documento.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+    
+    if (documento.length > 11) {
+      documento = documento.slice(0, 11); // Limitar a 11 caracteres
+    }
+  } else if (tipoDocumento === 'Pasaporte') {
+    documento = documento.replace(/[^a-zA-Z0-9]/g, ''); // Eliminar caracteres no alfanuméricos
+  }
+
+  event.target.value = documento;
+});
+
+
+
+
+
+// elimina las letras digitadas en el campo valor
+var valorInput = document.getElementById('valorlb');
+
+valorInput.addEventListener('input', function() {
+  var valorlb = valorInput.value;
+  valorlb = valorlb.replace(/[^\d.]/g, ''); // Eliminar caracteres no numéricos excepto el punto decimal
+  valorlb = valorlb.replace(/^(\d+\.\d{0,2})\d*$/, '$1'); // Mantener solo dos dígitos decimales
+  valorInput.value = valorlb;
+});
+
+// Elimina las letras digitadas en el campo cuenta origen
+var origenInput = document.getElementById('origenlb');
+
+origenInput.addEventListener('input', function() {
+  var origenlb = origenInput.value;
+  origenlb = origenlb.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos excepto el punto decimal
+  origenInput.value = origenlb;
+});
+
+// Elimina las letras digitadas en el campo cuenta destino
+var destinoInput = document.getElementById('destinolb');
+
+destinoInput.addEventListener('input', function() {
+  var destinolb = destinoInput.value;
+  destinolb = destinolb.replace(/[^\d]/g, ''); // Eliminar caracteres no numéricos
+  destinoInput.value = destinolb;
+});
+
+
+
+function convertirAMayusculas(input) {
+  var text = input.value;
+  input.value = capitalizeWords(text);
+}
+
+function capitalizeWords(text) {
+  var words = text.split(" ");
+  for (var i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+  }
+  return words.join(" ");
+}
+
+    
+
+
+
+
+  // Código previo omitido...
+
+  // Función para obtener el nombre del banco a partir de su ID
+  function getNombreBancolb(id) {
+    var select = document.getElementById('bancolb');
+    for (var i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === id) {
+        return select.options[i].textContent;
+      }
+    }
+    return '';
+  }
+
+  // Renderiza las transferencias en la tabla
+  function renderTransferslb() {
+    var transferList = document.getElementById('transfer-listlb');
+    transferList.innerHTML = '';
+
+    transfers.forEach(function(transfer, index) {
+      var row = document.createElement('tr');
+
+      // Agregar número de celda como texto en la primera columna
+      var cellNumber = document.createElement('td');
+      cellNumber.textContent = index + 1;
+      row.appendChild(cellNumber);
+
+      // Crear celdas solo para los campos deseados
+      var fieldsToShow = ['bancolb', 'origenlb', 'destinolb', 'valorlb', 'nombrelb','descripcionlb'];
+      fieldsToShow.forEach(function(key) {
+        var cell = document.createElement('td');
+        var value = transfer[key];
+
+        // Verificar si el campo actual es 'banco' para obtener el nombre
+        if (key === 'bancolb') {
+          value = getNombreBancolb(value);
+        }
+
+        // Verificar si el campo actual es 'valor' para decidir si es editable o no
+        if (key === 'valorlb') {
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.value = formatCurrency(value);
+          input.setAttribute('data-index', index);
+          input.setAttribute('data-key', key);
+          input.addEventListener('input', updateTransferlb);
+          input.addEventListener('input', function(event) {
+            var inputValue = event.target.value;
+            var cleanValue = inputValue.replace(/[^0-9.]/g, ''); // Filtrar solo números y punto decimal
+            event.target.value = cleanValue;
+          });
+
+          cell.appendChild(input);
+        } else {
+          var span = document.createElement('span');
+          span.textContent = value;
+
+          cell.appendChild(span);
+        }
+
+        row.appendChild(cell);
+      });
+
+      var deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Eliminar';
+          deleteButton.classList.add('delete-button'); // Agregar la clase 'delete-button' al botón
+          deleteButton.addEventListener('click', function() {
+            var confirmDelete = confirm('¿Estás seguro de que deseas eliminar este registro?');
+            if (confirmDelete === true) {
+            deleteTransfer(transfer);
+              }
+      
+          });
+
+
+      var deleteCell = document.createElement('td');
+      deleteCell.appendChild(deleteButton);
+      row.appendChild(deleteCell);
+
+      row.addEventListener('click', function() {
+        highlightRow(row);
+      });
+
+      transferList.appendChild(row);
+    });
+  }
+
+  // Resto del código omitido...
+
+
+
+
+
+    // Actualiza la transferencia al editar un campo
+    function updateTransferlb(event) {
+      var input = event.target;
+      var index = input.getAttribute('data-index');
+      var key = input.getAttribute('data-key');
+      var value = input.value;
+
+      transfers[index][key] = value;
+      summarizeTransfers(); // Actualiza el resumen de registros y sumatoria
+    }
+
+    // Elimina una transferencia de la lista
+    function deleteTransfer(transfer) {
+      var index = transfers.indexOf(transfer);
+      if (index > -1) {
+        transfers.splice(index, 1);
+      }
+      renderTransferslb(); // Actualiza la visualización de las transferencias
+      summarizeTransfers(); // Actualiza el resumen de registros y sumatoria
+    }
+
+    // Limpia el formulario
+    function clearForm() {
+      //document.getElementById('tipolb').value = '';//modificado
+     // document.getElementById('tipoMCOlb').value = '';//modificado
+     // document.getElementById('origenlb').value = '';
+      document.getElementById('destinolb').value = '';
+      document.getElementById('valorlb').value = '';
+      document.getElementById('nombrelb').value = '';
+      document.getElementById('tipolb').disabled = true;
+      document.getElementById('origenlb').disabled = true;
+      document.getElementById('tipoMCOlb').disabled = true;
+      
+    }
+
+/*La función getFormattedDateTime() obtiene la fecha y la hora actual y las formatea en el formato "YYYYMMDD-HHMMSS" (por ejemplo, "20230101-153000"). Puedes ajustar el formato según tus preferencias. */
+
+
+    function getFormattedDateTime() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = ('0' + (now.getMonth() + 1)).slice(-2);
+  var day = ('0' + now.getDate()).slice(-2);
+  var hours = ('0' + now.getHours()).slice(-2);
+  var minutes = ('0' + now.getMinutes()).slice(-2);
+  var seconds = ('0' + now.getSeconds()).slice(-2);
+  return day + month + year  + '-' + hours + minutes + seconds;
+}
+
+
+    // Guarda las transferencias en un archivo de texto
+    function saveTransfers() {
+    
+// Verificar si hay campos para guardar
+var hasFields = transfers.some(function(transfer) {
+    return Object.keys(transfer).some(function(key) {
+      return transfer[key] !== '';
+    });
+  });
+
+  if (!hasFields) {
+    alert('No hay campos para guardar.');
+    return;
+  }
+
+
+    var fileName = prompt("Ingrese el nombre del archivo:");
+
+if (!fileName) {
+  // El usuario no ingresó un nombre de archivo
+  return;
+}
+
+
+      var csvContent = 'data:text/csv;charset=utf-8,';
+      var rows = [];
+
+      transfers.forEach(function(transfer) {
+
+      // Formatear el campo "valor" sin comas y con dos posiciones decimales
+      var valorlb = parseFloat(transfer.valorlb.replace(/,/g, '')).toFixed(2);
+      transfer.valorlb = valorlb;
+
+        var row = Object.values(transfer).join(',');
+        rows.push(row);
+      });
+
+      csvContent += rows.join('\n');
+
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', fileName + getFormattedDateTime() + '.txt');
+      link.click();
+      
+    }
+
+    // Actualiza el resumen de registros y sumatoria
+    function summarizeTransfers() {
+      var summaryLabel = document.getElementById('summary-labellb');
+      var totalTransfers = transfers.length;
+      var totalAmount = transfers.reduce(function(total, transfer) {
+        return total + parseFloat(transfer.valorlb);
+      
+      }, 0);
+      summaryLabel.textContent = 'Registros: ' + totalTransfers + ' | Sumatoria: ' + formatCurrency(totalAmount);
+    }
+
+    // Formatea un número como moneda
+
+    function formatCurrency(value) {
+  // Convierte el valor a número y redondea a dos decimales
+  var floatValue = parseFloat(value);
+  var roundedValue = floatValue.toFixed(2);
+
+  // Separa los miles con comas
+  var parts = roundedValue.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  // Devuelve el valor formateado
+  return parts.join(".");
+}
+/*
+    function formatCurrency(value) {
+      return parseFloat(value).toFixed(2);
+      
+    } */
+
+    // Valida el formulario antes de enviarlo
+    function validateForm(event) {
+      event.preventDefault();
+      var fileInput = document.getElementById('file-inputlb');
+      if (transfers.length === 0 && fileInput.files.length === 0) {
+        alert('Debe agregar al menos una transferencia o cargar un archivo.');
+      } else {
+        alert('Formulario enviado correctamente.');
+      }
+    }
+
+   // Realiza la carga de transferencias desde un archivo
+function loadTransferslb() {
+  var fileInput = document.getElementById('file-inputlb');
+  var file = fileInput.files[0];
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    var fileContentlb = event.target.result;
+    var filteredContentlb = filterSpecialCharacters(fileContentlb);
+    parseTransfersFromFile(filteredContentlb);
+
+    console.log(filteredContentlb);
+  };
+  reader.readAsText(file);
+}
+
+
+// Función auxiliar para filtrar caracteres especiales
+function filterSpecialCharacters(content) {
+  return content.replace(/[^\w\s,.]/g, ''); // Eliminar caracteres especiales excepto comas y puntos
+}
+
+
+    // Parsea las transferencias desde un archivo cargado
+    function parseTransfersFromFile(fileContentlb) {
+      var lines = fileContentlb.split('\n');
+      lines.forEach(function(line) {
+        var fields = line.split(',');
+        if (fields.length === 12) {
+          var tipolb = fields[0].trim();
+          var tipoMCOlb = fields[1].trim();
+          var origenlb = fields[2].trim();
+          var tipoMCODlb = fields[3].trim();
+          var valorlb = parseFloat(fields[4].trim()).toFixed(2);
+          var bancolb = fields[5].trim();
+          var tipoCDlb = fields[6].trim();
+          var destinolb = fields[7].trim();
+          var nombrelb = fields[8].trim();
+          var tidentificacionlb = fields[9].trim();
+          var identificacionlb = fields[10].trim();
+          var descripcionlb = fields[11].trim();
+          
+
+        var transfer = {
+        tipolb: tipolb,// modificado
+        tipoMCOlb: tipoMCOlb,// modificado
+        origenlb: origenlb,
+        tipoMCODlb: tipoMCODlb,// modificado
+        valorlb: valorlb,
+        bancolb: bancolb,
+        tipoCDlb: tipoCDlb,// modificado
+        destinolb: destinolb,
+        nombrelb: nombrelb,
+        tidentificacionlb: tidentificacionlb,
+        identificacionlb: identificacionlb,
+        descripcionlb: descripcionlb
+         
+      };
+
+          transfers.push(transfer);
+        }
+      });
+
+      renderTransferslb(); // Actualiza la visualización de las transferencias
+      summarizeTransfers(); // Actualiza el resumen de registros y sumatoria
+    }
+
+    // Resalta la fila seleccionada en la tabla
+    function highlightRow(row) {
+      var rows = document.getElementsByTagName('tr');
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].classList.remove('highlighted-row');
+      }
+      row.classList.add('highlighted-row');
+    }
+    
+  </script>
+
+
+
+    </div>
+
+    <script>
+        function changeTab(event, tabId) {
+            var tabs = document.getElementsByClassName('tab');
+            var tabContents = document.getElementsByClassName('tab-content');
+            
+            // Desactivar todas las pestañas y ocultar su contenido
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Activar la pestaña seleccionada y mostrar su contenido
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
